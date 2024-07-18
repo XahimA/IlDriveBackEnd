@@ -1,0 +1,9 @@
+django
+djangorestframework==3.14.0
+mysqlclient
+whitenoise
+pandas
+boto3
+django-storages
+AHRS
+scipy

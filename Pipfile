@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djangorestframework = "==3.14.0"
+mysqlclient = "*"
+whitenoise = "*"
+pandas = "*"
+boto3 = "*"
+django-storages = "*"
+ahrs = "*"
+scipy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
