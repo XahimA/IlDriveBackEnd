@@ -107,31 +107,31 @@ class DriverDetail(models.Model):
     D8 = models.TextField(null=True)
     D9 = models.FloatField(null=True)
     D10 = models.FloatField(null=True)
-
     
+
+
 class TripDetail(models.Model):
     id = models.AutoField(primary_key=True)
-    startTime = models.DateTimeField(auto_now_add=True)
-    endTime = models.DateTimeField(auto_now_add=True)
-    details = models.TextField(null=True)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    startLoc = models.FloatField(null=True)
-    endLoc = models.FloatField(null=True)
-    owner = models.TextField(null=True)
-    driver = models.TextField(null = True) 
-    datasets = models.TextField(null=True)
-    trp1 = models.TextField(null=True)
-    trp2 = models.TextField(null=True)
-    trp3 = models.TextField(null=True)
-    trp4 = models.FloatField(null=True)
-    trp5 = models.FloatField(null=True)
-    trp6 = models.TextField(null=True)
-    trp7 = models.TextField(null=True)
-    trp8 = models.TextField(null=True)
-    trp9 = models.FloatField(null=True)
-    trp10 = models.FloatField(null=True)
-    # Tripdetail_id = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
-    Tripdetail_id = models.TextField(null=True)
+    # startTime = models.DateTimeField(auto_now_add=True)
+    # endTime = models.DateTimeField(auto_now_add=True)
+    # details = models.TextField(null=True)
+    # createdAt = models.DateTimeField(auto_now_add=True)
+    # startLoc = models.FloatField(null=True)
+    # endLoc = models.FloatField(null=True)
+    # owner = models.TextField(null=True)
+    # driver = models.TextField(null = True) 
+    # datasets = models.TextField(null=True)
+    # trp1 = models.TextField(null=True)
+    # trp2 = models.TextField(null=True)
+    # trp3 = models.TextField(null=True)
+    # trp4 = models.FloatField(null=True)
+    # trp5 = models.FloatField(null=True)
+    # trp6 = models.TextField(null=True)
+    # trp7 = models.TextField(null=True)
+    # trp8 = models.TextField(null=True)
+    # trp9 = models.FloatField(null=True)
+    # trp10 = models.FloatField(null=True)
+    Tripdetail_id = models.BigIntegerField(null=True)
     Trip_No = models.BigIntegerField(null=True)
     Risk_Instance = models.FloatField(null=True)
     Average_speed = models.FloatField(null=True) 
@@ -195,10 +195,5 @@ class Data(models.Model):
     dt8 = models.TextField(null=True)
     dt9 = models.FloatField(null=True)
     dt10 = models.FloatField(null=True)
-
-
-
-
-
 
 
