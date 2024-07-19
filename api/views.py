@@ -474,34 +474,50 @@ def trip_data(request,id_n):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def get_trip_details(request, id_t):
-    try:
-        trip_details = TripDetail.objects.filter(Tripdetail_id_id=id_t)
-        serializer = TripDetailsViewSerializer(trip_details, many=True)
-        # Modify the field names in the serialized data
-        modified_data = []
-        for item in serializer.data:
-            modified_item = {
-                'Trip No': item['Trip_No'],  # Replace with your desired field name
-                # 'Tripdetail Id': item['Tripdetail_id'],
-                'Total Distance': item['Risk_Instance'],
-                'Overspeed Score': item['Average_speed'],  # Replace with your desired field name
-                'Acceleration Score': item['Trip_time'],
-                'Braking Score': item['Distance_Travelled'],
-                'Time of Travel Score': item['Score'],  # Replace with your desired field name
-                'Distance Score': item['C1'],
-                'Total Averaged Score': item['C2'],
-                'Exponential Score': item['C4'],
-                # Add other fields as needed
-            }
-            modified_data.append(modified_item)
-        print(modified_data)
-        return Response(modified_data, status=status.HTTP_200_OK)
-    except TripDetail.DoesNotExist:
-        return Response({"error": "Trip details not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
+@api_view(['GET', 'DELETE'])
+def get_trip_details(request, id_t=None):
+    if request.method == 'GET':
+        try:
+            if id_t is not None:
+                trip_details = TripDetail.objects.filter(Tripdetail_id=id_t)
+                if not trip_details.exists():
+                    return Response({"error": "Trip details not found"}, status=status.HTTP_404_NOT_FOUND)
+            else:
+                trip_details = TripDetail.objects.all()
+
+            serializer = TripDetailsViewSerializer(trip_details, many=True)
+            modified_data = []
+            for item in serializer.data:
+                modified_item = {
+                    'Trip No': item['Trip_No'],
+                    'Total Distance': item['Risk_Instance'],
+                    'Overspeed Score': item['Average_speed'],
+                    'Acceleration Score': item['Trip_time'],
+                    'Braking Score': item['Distance_Travelled'],
+                    'Time of Travel Score': item['Score'],
+                    'Distance Score': item['C1'],
+                    'Total Averaged Score': item['C2'],
+                    'Exponential Score': item['C4'],
+                }
+                modified_data.append(modified_item)
+            return Response(modified_data, status=status.HTTP_200_OK)
+        except TripDetail.DoesNotExist:
+            return Response({"error": "Trip details not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    elif request.method == 'DELETE':
+        if id_t is None:
+            return Response({"error": "Trip No is required for DELETE request"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            trip_detail = TripDetail.objects.filter(Trip_No=id_t)
+            if not trip_detail.exists():
+                return Response({"error": "Trip detail not found"}, status=status.HTTP_404_NOT_FOUND)
+            trip_detail.delete()
+            return Response({"success": "Trip detail(s) deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        except TripDetail.DoesNotExist:
+            return Response({"error": "Trip detail not found"}, status=status.HTTP_404_NOT_FOUND)
+        
 @api_view(['POST'])
 def upload_csv_api(request):
     try:
